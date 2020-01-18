@@ -5,8 +5,11 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
+
+	"github.com/LuD1161/go_programming_blueprints/trace"
 )
 
 // templ represents a single template
@@ -24,12 +27,12 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// root
 	var addr = flag.String("addr", ":8080", "The addr of the application.")
 	flag.Parse() // parse the flags
 	http.Handle("/", &templateHandler{fileName: "chat.html"})
 
 	r := newRoom()
+	r.tracer = trace.New(os.Stdout)
 	http.Handle("/room", r)
 	// get the room going
 	go r.run()
