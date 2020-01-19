@@ -5,11 +5,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"sync"
-
-	"github.com/LuD1161/go_programming_blueprints/trace"
 )
 
 // templ represents a single template
