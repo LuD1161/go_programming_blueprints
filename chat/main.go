@@ -10,6 +10,8 @@ import (
 	"sync"
 
 	"github.com/LuD1161/go_programming_blueprints/trace"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/google"
 )
 
 // templ represents a single template
@@ -29,6 +31,11 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	var addr = flag.String("addr", ":8080", "The addr of the application.")
 	flag.Parse() // parse the flags
+	// setup gomniauth
+	gomniauth.SetSecurityKey("1MoQ85lLbHOGqNFXkoggM3I69QhPRXWlCyVcjuRHcEoRG9ULsuFhBch16vRjcd5u")
+	gomniauth.WithProviders(
+		google.New(os.Getenv("gomniauth_google_key"), os.Getenv("gomniauth_google_secret"), "http://localhost:8080/auth/callback/google"),
+	)
 	http.Handle("/chat", MustAuth(&templateHandler{fileName: "chat.html"}))
 	http.Handle("/login", &templateHandler{fileName: "login.html"})
 	http.HandleFunc("/auth/", loginHandler)
