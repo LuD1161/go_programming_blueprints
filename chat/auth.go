@@ -80,7 +80,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			"userId":     userId,
 			"name":       user.Name(),
 			"avatar_url": user.AvatarURL(),
-			"email":      user.Email(),
 		}).MustBase64()
 		http.SetCookie(w, &http.Cookie{
 			Name:  "auth",

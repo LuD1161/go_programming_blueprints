@@ -56,7 +56,9 @@ func main() {
 		w.Header().Set("Location", "/chat")
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	})
-
+	http.Handle("/upload", &templateHandler{fileName: "upload.html"})
+	http.HandleFunc("/uploader", uploaderHandler)
+	// r := newRoom(UseAuthAvatar)
 	r := newRoom(UseGravatar)
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/room", r)
