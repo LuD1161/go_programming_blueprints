@@ -58,8 +58,11 @@ func main() {
 	})
 	http.Handle("/upload", &templateHandler{fileName: "upload.html"})
 	http.HandleFunc("/uploader", uploaderHandler)
+	// Use go's built-in file server to serve avatars
+	http.Handle("/avatars/", http.StripPrefix("/avatars/", http.FileServer(http.Dir("./avatars"))))
 	// r := newRoom(UseAuthAvatar)
-	r := newRoom(UseGravatar)
+	// r := newRoom(UseGravatar)
+	r := newRoom(UseFileSystemAvatar)
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/room", r)
 	// get the room going

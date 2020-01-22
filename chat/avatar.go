@@ -49,3 +49,19 @@ func (GravatarAvatar) GetAvatarURL(c *client) (string, error) {
 	}
 	return "//www.gravatar.com/avatar/" + userId, nil
 }
+
+type FileSystemAvatar struct{}
+
+var UseFileSystemAvatar FileSystemAvatar
+
+// GetAvatarURL : To get the avatar url
+func (FileSystemAvatar) GetAvatarURL(c *client) (string, error) {
+	// defining these vars to maintain
+	// line of sight
+	var userId string
+	var ok bool
+	if userId, ok = c.userData["userId"].(string); !ok {
+		return "", ErrNoAvatarURL
+	}
+	return "/avatars/" + userId + ".jpg", nil
+}
