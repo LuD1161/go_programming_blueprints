@@ -57,7 +57,7 @@ func main() {
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	})
 
-	r := newRoom()
+	r := newRoom(UseGravatar)
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/room", r)
 	// get the room going
